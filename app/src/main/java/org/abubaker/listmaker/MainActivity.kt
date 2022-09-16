@@ -8,7 +8,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import org.abubaker.listmaker.adapter.ListSelectionRecyclerViewAdapter
 import org.abubaker.listmaker.databinding.ActivityMainBinding
 
@@ -24,9 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener { _ ->
+            showCreateListDialog()
         }
 
         // Binding RecyclerView (from content_main.xml) using its #id assigned to the @include tag in the activity_main.xml
@@ -68,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton(positiveButtonTitle) { dialog, _ ->
             dialog.dismiss()
         }
+
+        builder.create().show()
 
     }
 
