@@ -7,6 +7,9 @@ import org.abubaker.listmaker.R
 
 class ListSelectionRecyclerViewAdapter : RecyclerView.Adapter<ListSelectionViewHolder>() {
 
+    /**
+     * Data Source: Custom Array
+     */
     private val listTitles = arrayOf(
         "Shopping List",
         "Chromes",
