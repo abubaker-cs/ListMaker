@@ -1,8 +1,11 @@
 package org.abubaker.listmaker
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +50,25 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // + Dialog
+    private fun showCreateListDialog() {
+
+        val dialogTitle = getString(R.string.name_of_list)
+        val positiveButtonTitle = getString(R.string.create_list)
+
+        val builder = AlertDialog.Builder(this)
+        val listTitleEditText = EditText(this)
+        listTitleEditText.inputType = InputType.TYPE_CLASS_TEXT
+
+        builder.setTitle(dialogTitle)
+        builder.setView(listTitleEditText)
+
+        builder.setPositiveButton(positiveButtonTitle) { dialog, _ ->
+            dialog.dismiss()
+        }
+
     }
 
 
