@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import org.abubaker.listmaker.adapter.ListSelectionRecyclerViewAdapter
 import org.abubaker.listmaker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,12 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        // Binding RecyclerView (from content_main.xml) using its #id assigned to the @include tag in the activity_main.xml
+        binding.contentMain.listsRecyclerview.layoutManager = LinearLayoutManager(this)
+        binding.contentMain.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter()
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
