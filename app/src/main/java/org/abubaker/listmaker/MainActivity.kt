@@ -10,10 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.abubaker.listmaker.adapter.ListSelectionRecyclerViewAdapter
 import org.abubaker.listmaker.databinding.ActivityMainBinding
+import org.abubaker.listmaker.model.ListDataManager
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    //
+    val listDataManager: ListDataManager = ListDataManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
