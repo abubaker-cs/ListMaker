@@ -15,7 +15,8 @@ import org.abubaker.listmaker.model.ListDataManager
 import org.abubaker.listmaker.model.TaskList
 import org.abubaker.listmaker.ui.ListDetailActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -45,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         binding.contentMain.listsRecyclerview.layoutManager = LinearLayoutManager(this)
 
         // We are passing "lists" containing reference to the records of existing data
-        binding.contentMain.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter(lists)
-
+        binding.contentMain.listsRecyclerview.adapter =
+            ListSelectionRecyclerViewAdapter(lists, this)
 
     }
 
@@ -95,6 +96,9 @@ class MainActivity : AppCompatActivity() {
             recyclerAdapter.addList(list)
 
             dialog.dismiss()
+
+            // Pass the "list" to the ListDetailActivity
+            showListDetail(list)
         }
 
         builder.create().show()
@@ -107,6 +111,10 @@ class MainActivity : AppCompatActivity() {
         listDetailIntent.putExtra(INTENT_LIST_KEY, list)
         startActivity(listDetailIntent)
 
+    }
+
+    override fun listItemClicked(list: TaskList) {
+        showListDetail(list)
     }
 
 

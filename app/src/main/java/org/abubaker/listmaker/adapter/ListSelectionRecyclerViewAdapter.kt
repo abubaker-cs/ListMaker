@@ -6,8 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.listmaker.R
 import org.abubaker.listmaker.model.TaskList
 
-class ListSelectionRecyclerViewAdapter(val lists: ArrayList<TaskList>) :
+class ListSelectionRecyclerViewAdapter(
+    private val lists: ArrayList<TaskList>,
+    val clickListener: ListSelectionRecyclerViewClickListener
+) :
     RecyclerView.Adapter<ListSelectionViewHolder>() {
+
+    interface ListSelectionRecyclerViewClickListener {
+        fun listItemClicked(list: TaskList)
+    }
 
     /**
      * Data Source: Custom Array
@@ -75,6 +82,10 @@ class ListSelectionRecyclerViewAdapter(val lists: ArrayList<TaskList>) :
         (position + 1).toString().also { holder.listPosition.text = it }
         // holder.listTitle.text = listTitles[position]
         holder.listTitle.text = lists[position].name
+
+        holder.itemView.setOnClickListener {
+            clickListener.listItemClicked(lists[position])
+        }
 
     }
 
