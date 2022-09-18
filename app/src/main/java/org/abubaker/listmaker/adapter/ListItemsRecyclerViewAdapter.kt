@@ -6,21 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.listmaker.R
 import org.abubaker.listmaker.model.TaskList
 
-class ListSelectionRecyclerViewAdapter(
-    private val lists: ArrayList<TaskList>,
-    private val clickListener: ListSelectionRecyclerViewClickListener
-) :
-    RecyclerView.Adapter<ListSelectionViewHolder>() {
-
-    interface ListSelectionRecyclerViewClickListener {
-        fun listItemClicked(list: TaskList)
-    }
-
-    /**
-     * Data Source: Custom Array
-     */
-    // private val listTitles = arrayOf("Shopping List", "Chromes", "Android Tutorials")
-
+class ListItemsRecyclerViewAdapter(var list: TaskList) :
+    RecyclerView.Adapter<ListItemViewHolder>() {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -44,16 +31,13 @@ class ListSelectionRecyclerViewAdapter(
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListSelectionViewHolder {
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
         // Inflate XML
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_selection_view_holder, parent, false)
-
-        // val view = ListSelectionViewHolder.inflate(LayoutInflater.from(parent.context))
+            .inflate(R.layout.task_view_holder, parent, false)
 
         // Return the VIEW (LAYOUT)
-        return ListSelectionViewHolder(view)
+        return ListItemViewHolder(view)
     }
 
     /**
@@ -77,16 +61,8 @@ class ListSelectionRecyclerViewAdapter(
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: ListSelectionViewHolder, position: Int) {
-
-        (position + 1).toString().also { holder.listPosition.text = it }
-        // holder.listTitle.text = listTitles[position]
-        holder.listTitle.text = lists[position].name
-
-        holder.itemView.setOnClickListener {
-            clickListener.listItemClicked(lists[position])
-        }
-
+    override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
+        holder.taskTextView.text = list.tasks[position]
     }
 
     /**
@@ -95,14 +71,8 @@ class ListSelectionRecyclerViewAdapter(
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-        // return listTitles.size
-        return lists.size
+        return list.tasks.size
     }
 
-    fun addList(list: TaskList) {
-        lists.add(list)
 
-        // Inform the Adapter about recent changes
-        notifyDataSetChanged()
-    }
 }
