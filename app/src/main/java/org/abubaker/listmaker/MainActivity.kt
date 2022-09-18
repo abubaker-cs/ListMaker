@@ -1,5 +1,6 @@
 package org.abubaker.listmaker
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
@@ -12,6 +13,7 @@ import org.abubaker.listmaker.adapter.ListSelectionRecyclerViewAdapter
 import org.abubaker.listmaker.databinding.ActivityMainBinding
 import org.abubaker.listmaker.model.ListDataManager
 import org.abubaker.listmaker.model.TaskList
+import org.abubaker.listmaker.ui.ListDetailActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     // This will be used to initialize storing data using SharedPreferences
     private val listDataManager: ListDataManager = ListDataManager(this)
+
+    companion object {
+        val INTENT_LIST_KEY = "list"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +98,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         builder.create().show()
+
+    }
+
+    private fun showListDetail(list: TaskList) {
+
+        val listDetailIntent = Intent(this, ListDetailActivity::class.java)
+        listDetailIntent.putExtra(INTENT_LIST_KEY, list)
+        startActivity(listDetailIntent)
 
     }
 
