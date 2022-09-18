@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(),
     private val listDataManager: ListDataManager = ListDataManager(this)
 
     companion object {
-        val INTENT_LIST_KEY = "list"
+        const val INTENT_LIST_KEY = "list"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
