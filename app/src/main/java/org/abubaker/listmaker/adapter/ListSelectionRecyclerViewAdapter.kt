@@ -4,17 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.abubaker.listmaker.R
+import org.abubaker.listmaker.model.TaskList
 
-class ListSelectionRecyclerViewAdapter : RecyclerView.Adapter<ListSelectionViewHolder>() {
+class ListSelectionRecyclerViewAdapter(val lists: ArrayList<TaskList>) :
+    RecyclerView.Adapter<ListSelectionViewHolder>() {
 
     /**
      * Data Source: Custom Array
      */
-    private val listTitles = arrayOf(
-        "Shopping List",
-        "Chromes",
-        "Android Tutorials"
-    )
+    // private val listTitles = arrayOf("Shopping List", "Chromes", "Android Tutorials")
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -75,7 +73,8 @@ class ListSelectionRecyclerViewAdapter : RecyclerView.Adapter<ListSelectionViewH
     override fun onBindViewHolder(holder: ListSelectionViewHolder, position: Int) {
 
         (position + 1).toString().also { holder.listPosition.text = it }
-        holder.listTitle.text = listTitles[position]
+        // holder.listTitle.text = listTitles[position]
+        holder.listTitle.text = lists[position].name
 
     }
 
@@ -85,6 +84,14 @@ class ListSelectionRecyclerViewAdapter : RecyclerView.Adapter<ListSelectionViewH
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-        return listTitles.size
+        // return listTitles.size
+        return lists.size
+    }
+
+    fun addList(list: TaskList) {
+        lists.add(list)
+
+        // Inform the Adapter about recent changes
+        notifyDataSetChanged()
     }
 }

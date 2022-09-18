@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.abubaker.listmaker.adapter.ListSelectionRecyclerViewAdapter
 import org.abubaker.listmaker.databinding.ActivityMainBinding
 import org.abubaker.listmaker.model.ListDataManager
+import org.abubaker.listmaker.model.TaskList
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    //
-    val listDataManager: ListDataManager = ListDataManager(this)
+    // This will be used to initialize storing data using SharedPreferences
+    private val listDataManager: ListDataManager = ListDataManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +32,14 @@ class MainActivity : AppCompatActivity() {
             showCreateListDialog()
         }
 
+        // Refreshing RecyclerView on page load
+        val lists = listDataManager.readLists()
+
         // Binding RecyclerView (from content_main.xml) using its #id assigned to the @include tag in the activity_main.xml
         binding.contentMain.listsRecyclerview.layoutManager = LinearLayoutManager(this)
-        binding.contentMain.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter()
+
+        // We are passing "lists" containing reference to the records of existing data
+        binding.contentMain.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter(lists)
 
 
     }
@@ -68,6 +74,20 @@ class MainActivity : AppCompatActivity() {
         builder.setView(listTitleEditText)
 
         builder.setPositiveButton(positiveButtonTitle) { dialog, _ ->
+
+            // We are creating an Empty list, TITLED from the EditText
+            val list = TaskList(listTitleEditText.text.toString())
+
+            // Now we are storing the new list
+            listDataManager.saveList(list)
+
+            // Refresh RecyclerView
+            val recyclerAdapter =
+                binding.contentMain.listsRecyclerview.adapter as ListSelectionRecyclerViewAdapter
+
+            //
+            recyclerAdapter.addList(list)
+
             dialog.dismiss()
         }
 
